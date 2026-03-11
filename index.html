@@ -13,6 +13,8 @@ margin:0;
 background:#f3fff6;
 }
 
+/* NAVBAR */
+
 nav{
 background:#17a673;
 padding:12px;
@@ -27,18 +29,59 @@ text-decoration:none;
 font-weight:bold;
 }
 
-header{
-text-align:center;
-padding:40px;
-background:#1cc88a;
+/* HERO BACKGROUND */
+
+.hero{
+background:url("https://images.unsplash.com/photo-1563805042-7684c019e1cb") center/cover;
+height:300px;
+display:flex;
+align-items:center;
+justify-content:center;
+flex-direction:column;
 color:white;
+text-shadow:0 2px 5px rgba(0,0,0,0.5);
+text-align:center;
 }
+
+.hero h1{
+font-size:34px;
+margin:0;
+}
+
+.hero p{
+font-size:18px;
+}
+
+/* SECTION */
 
 section{
 max-width:900px;
 margin:auto;
-padding:20px;
+padding:25px;
 text-align:center;
+}
+
+/* CARD PRODUK */
+
+.produk{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-top:20px;
+}
+
+.card{
+background:white;
+border-radius:10px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+padding:15px;
+}
+
+.card img{
+width:100%;
+height:150px;
+object-fit:cover;
+border-radius:8px;
 }
 
 button{
@@ -48,13 +91,15 @@ border:none;
 padding:10px 20px;
 border-radius:5px;
 cursor:pointer;
+margin-top:15px;
 }
 
 footer{
 background:#17a673;
 color:white;
 text-align:center;
-padding:10px;
+padding:12px;
+margin-top:30px;
 }
 
 </style>
@@ -69,22 +114,54 @@ padding:10px;
 <a href="lokasi.html">Lokasi</a>
 </nav>
 
-<header>
+<div class="hero">
 <h1>Rokupang & Es Teler Yummy</h1>
-<p>Minuman Segar & Roti Kukus Favorit</p>
-</header>
+<p>Segar • Manis • Nikmat</p>
+</div>
 
 <section>
 
-<h2>Selamat Datang</h2>
+<h2>Apa Itu Es Teler?</h2>
 
 <p>
-Kami menyediakan minuman segar dan roti kukus enak.
+Es Teler adalah minuman khas Indonesia yang terbuat dari campuran
+alpukat, kelapa muda, nangka, susu kental manis, dan es serut.
+Rasanya manis, segar, dan sangat cocok diminum saat cuaca panas.
+Di Esteler Yummy kami menyajikan Es Teler dengan bahan segar dan
+rasa yang nikmat.
 </p>
 
 <a href="menu.html">
 <button>Lihat Menu</button>
 </a>
+
+</section>
+
+<section>
+
+<h2>Menu Favorit</h2>
+
+<div class="produk">
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1563805042-7684c019e1cb">
+<h3>Es Teler Yummy</h3>
+<p>Minuman segar dengan buah pilihan</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b">
+<h3>Es Coklat</h3>
+<p>Minuman coklat dingin yang manis</p>
+</div>
+
+<div class="card">
+<img src="https://images.unsplash.com/photo-1608198093002-ad4e005484ec">
+<h3>Rokupang</h3>
+<p>Roti kukus lembut dengan topping lezat</p>
+</div>
+
+</div>
 
 </section>
 
