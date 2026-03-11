@@ -5,11 +5,7 @@
 
 <style>
 
-body{
-font-family:Arial;
-margin:0;
-background:#f3fff6;
-}
+body{font-family:Arial;margin:0;background:#f3fff6;}
 
 nav{
 background:#17a673;
@@ -45,11 +41,18 @@ text-align:center;
 box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
+.qty{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-top:10px;
+}
+
 button{
 background:#17a673;
 color:white;
 border:none;
-padding:10px;
+padding:8px 12px;
 border-radius:5px;
 cursor:pointer;
 }
@@ -74,17 +77,29 @@ cursor:pointer;
 
 <div class="card">
 <h3>Es Teler Yummy</h3>
-<button onclick="tambah('Es Teler Yummy')">Tambah</button>
+
+<div class="qty">
+<button onclick="tambah('Es Teler Yummy',1)">+ Tambah</button>
+</div>
+
 </div>
 
 <div class="card">
 <h3>Es Coklat</h3>
-<button onclick="tambah('Es Coklat')">Tambah</button>
+
+<div class="qty">
+<button onclick="tambah('Es Coklat',1)">+ Tambah</button>
+</div>
+
 </div>
 
 <div class="card">
-<h3>Rokupang (Roti Kukus/Panggang)</h3>
-<button onclick="tambah('Rokupang')">Tambah</button>
+<h3>Rokupang</h3>
+
+<div class="qty">
+<button onclick="tambah('Rokupang',1)">+ Tambah</button>
+</div>
+
 </div>
 
 </div>
@@ -93,11 +108,21 @@ cursor:pointer;
 
 <script>
 
-function tambah(menu){
+function tambah(nama,jumlah){
 
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
-keranjang.push(menu);
+let index = keranjang.findIndex(p => p.nama === nama);
+
+if(index !== -1){
+
+keranjang[index].jumlah += jumlah;
+
+}else{
+
+keranjang.push({nama:nama,jumlah:jumlah});
+
+}
 
 localStorage.setItem("keranjang",JSON.stringify(keranjang));
 
