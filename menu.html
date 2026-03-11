@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu - Rokupang & Es Teler Yummy</title>
+
+<style>
+
+body{
+font-family:Arial;
+margin:0;
+background:#f3fff6;
+}
+
+nav{
+background:#17a673;
+padding:12px;
+display:flex;
+justify-content:center;
+gap:25px;
+}
+
+nav a{
+color:white;
+text-decoration:none;
+font-weight:bold;
+}
+
+header{
+text-align:center;
+padding:30px;
+background:#1cc88a;
+color:white;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+padding:20px;
+}
+
+.menu{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+}
+
+.card{
+background:white;
+padding:12px;
+border-radius:8px;
+text-align:center;
+box-shadow:0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card img{
+width:100%;
+border-radius:6px;
+}
+
+button{
+background:#17a673;
+color:white;
+border:none;
+padding:10px;
+border-radius:5px;
+cursor:pointer;
+}
+
+footer{
+background:#17a673;
+color:white;
+text-align:center;
+padding:10px;
+margin-top:20px;
+}
+
+</style>
+</head>
+
+<body>
+
+<nav>
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="keranjang.html">Keranjang</a>
+<a href="lokasi.html">Lokasi</a>
+</nav>
+
+<header>
+<h1>Menu Produk</h1>
+<p>Rokupang & Es Teler Yummy</p>
+</header>
+
+<div class="container">
+
+<div class="menu">
+
+<div class="card">
+<img src="https://i.imgur.com/6V9QK9T.jpg">
+<h3>Es Teler Original</h3>
+<p>Segar dan manis</p>
+<button onclick="order('Es Teler Original')">Pesan</button>
+</div>
+
+<div class="card">
+<img src="https://i.imgur.com/6V9QK9T.jpg">
+<h3>Roti Kukus</h3>
+<p>Lembut dan hangat</p>
+<button onclick="order('Roti Kukus')">Pesan</button>
+</div>
+
+</div>
+
+</div>
+
+<footer>
+<p>WhatsApp Order: 082217743964</p>
+<p>© 2026 Rokupang & Es Teler Yummy</p>
+</footer>
+
+<script>
+
+function order(menu){
+
+let pesan="Halo saya ingin pesan:%0A"+menu;
+
+window.open("https://wa.me/6282217743964?text="+pesan);
+
+}
+
+</script>
+
+</body>
+</html>
