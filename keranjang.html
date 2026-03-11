@@ -1,9 +1,7 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keranjang - Rokupang & Es Teler Yummy</title>
+<title>Keranjang</title>
 
 <style>
 
@@ -18,7 +16,7 @@ background:#17a673;
 padding:12px;
 display:flex;
 justify-content:center;
-gap:25px;
+gap:20px;
 }
 
 nav a{
@@ -27,42 +25,19 @@ text-decoration:none;
 font-weight:bold;
 }
 
-header{
-text-align:center;
-padding:30px;
-background:#1cc88a;
-color:white;
-}
-
 .container{
 max-width:900px;
 margin:auto;
 padding:20px;
 }
 
-#list{
-background:white;
-padding:20px;
-border-radius:8px;
-box-shadow:0 2px 5px rgba(0,0,0,0.1);
-}
-
 button{
 background:#17a673;
 color:white;
 border:none;
-padding:10px 15px;
+padding:10px;
 border-radius:5px;
 cursor:pointer;
-margin-top:10px;
-}
-
-footer{
-background:#17a673;
-color:white;
-text-align:center;
-padding:10px;
-margin-top:20px;
 }
 
 </style>
@@ -77,40 +52,23 @@ margin-top:20px;
 <a href="lokasi.html">Lokasi</a>
 </nav>
 
-<header>
-<h1>Keranjang Pesanan</h1>
-<p>Rokupang & Es Teler Yummy</p>
-</header>
-
 <div class="container">
 
-<div id="list">
-Belum ada pesanan
-</div>
+<h2>Keranjang Pesanan</h2>
+
+<div id="list"></div>
 
 <br>
 
-<button onclick="pesanWA()">Pesan Sekarang</button>
+<button onclick="orderWA()">Pesan via WhatsApp</button>
 
 </div>
-
-<footer>
-<p>WhatsApp: 082217743964</p>
-<p>© 2026 Rokupang & Es Teler Yummy</p>
-</footer>
 
 <script>
 
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
-function tampil(){
-
-let list = document.getElementById("list");
-
-if(keranjang.length == 0){
-list.innerHTML="Belum ada pesanan";
-return;
-}
+let list=document.getElementById("list");
 
 let html="";
 
@@ -120,16 +78,9 @@ html += (i+1)+". "+item+"<br>";
 
 list.innerHTML=html;
 
-}
+function orderWA(){
 
-function pesanWA(){
-
-if(keranjang.length==0){
-alert("Keranjang kosong");
-return;
-}
-
-let pesan="Pesanan Rokupang & Es Teler Yummy:%0A";
+let pesan="Pesanan:%0A";
 
 keranjang.forEach((item,i)=>{
 pesan += (i+1)+". "+item+"%0A";
@@ -138,8 +89,6 @@ pesan += (i+1)+". "+item+"%0A";
 window.open("https://wa.me/6282217743964?text="+pesan);
 
 }
-
-tampil();
 
 </script>
 
