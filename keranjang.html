@@ -1,11 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-<title>Keranjang</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Keranjang - Esteler Yummy</title>
 
 <style>
 
-body{font-family:Arial;margin:0;background:#f3fff6;}
+body{
+font-family:Arial;
+margin:0;
+background:#f3fff6;
+}
 
 nav{
 background:#17a673;
@@ -27,14 +33,35 @@ margin:auto;
 padding:20px;
 }
 
+.item{
+background:white;
+padding:15px;
+border-radius:8px;
+margin-bottom:10px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
 button{
-background:#17a673;
-color:white;
 border:none;
-padding:10px;
+padding:6px 10px;
 border-radius:5px;
 cursor:pointer;
-margin-top:10px;
+}
+
+.hapus{
+background:red;
+color:white;
+}
+
+.pesan{
+background:#17a673;
+color:white;
+padding:10px;
+margin-top:15px;
+width:100%;
 }
 
 </style>
@@ -55,9 +82,7 @@ margin-top:10px;
 
 <div id="list"></div>
 
-<br>
-
-<button onclick="orderWA()">Pesan via WhatsApp</button>
+<button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
 
 </div>
 
@@ -67,29 +92,60 @@ let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
 let list=document.getElementById("list");
 
+function tampil(){
+
+if(keranjang.length==0){
+list.innerHTML="Keranjang kosong";
+return;
+}
+
 let html="";
 
 keranjang.forEach((item,i)=>{
 
-html += (i+1)+". "+item.nama+" x "+item.jumlah+"<br>";
+html+=`
+<div class="item">
+<span>${item.nama} x ${item.jumlah}</span>
+<button class="hapus" onclick="hapus(${i})">Hapus</button>
+</div>
+`;
 
 });
 
 list.innerHTML=html;
 
+}
+
+function hapus(i){
+
+keranjang.splice(i,1);
+
+localStorage.setItem("keranjang",JSON.stringify(keranjang));
+
+tampil();
+
+}
+
 function orderWA(){
+
+if(keranjang.length==0){
+alert("Keranjang kosong");
+return;
+}
 
 let pesan="Pesanan Rokupang & Es Teler Yummy:%0A";
 
 keranjang.forEach((item,i)=>{
 
-pesan += (i+1)+". "+item.nama+" x "+item.jumlah+"%0A";
+pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+"%0A";
 
 });
 
 window.open("https://wa.me/6282217743964?text="+pesan);
 
 }
+
+tampil();
 
 </script>
 
