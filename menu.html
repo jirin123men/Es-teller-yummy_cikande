@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu - Esteler Yummy</title>
-
-<style>
+<title>Menu - Esteler Yummy</title><style>
 
 body{
 font-family:Arial;
@@ -21,6 +18,7 @@ padding:12px;
 display:flex;
 justify-content:center;
 gap:20px;
+flex-wrap:wrap;
 }
 
 nav a{
@@ -29,7 +27,7 @@ text-decoration:none;
 font-weight:bold;
 }
 
-/* HERO BACKGROUND */
+/* HERO */
 
 .hero{
 background:url("bg.png") center/cover;
@@ -59,7 +57,7 @@ grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
 gap:15px;
 }
 
-/* CARD PRODUK */
+/* CARD */
 
 .card{
 background:white;
@@ -79,6 +77,12 @@ width:100%;
 height:140px;
 object-fit:cover;
 border-radius:8px;
+margin-bottom:10px;
+}
+
+.harga{
+color:#17a673;
+font-weight:bold;
 margin-bottom:10px;
 }
 
@@ -117,64 +121,48 @@ opacity:1;
 transform:translateY(0);
 }
 
-</style>
-</head>
-
-<body>
-
-<nav>
+</style></head><body><nav>
 <a href="index.html">Home</a>
 <a href="menu.html">Menu</a>
 <a href="keranjang.html">Keranjang</a>
 <a href="lokasi.html">Lokasi</a>
-</nav>
-
-<div class="hero">
+</nav><div class="hero">
 Menu Esteler Yummy
-</div>
-
-<div class="container">
-
-<h2>Menu Produk</h2>
-
-<div class="menu">
-
-<div class="card">
+</div><div class="container"><h2>Menu Produk</h2><div class="menu"><div class="card">
 <img src="1.png">
 <h3>Es Teler Yummy</h3>
-<button onclick="tambah('Es Teler Yummy')">+ Tambah</button>
-</div>
-
-<div class="card">
+<div class="harga">Rp10.000</div>
+<button onclick="tambah('Es Teler Yummy',10000)">+ Tambah</button>
+</div><div class="card">
 <img src="2.png">
 <h3>Es Coklat</h3>
-<button onclick="tambah('Es Coklat')">+ Tambah</button>
-</div>
-
-<div class="card">
+<div class="harga">Rp10.000</div>
+<button onclick="tambah('Es Coklat',10000)">+ Tambah</button>
+</div><div class="card">
 <img src="3.png">
 <h3>Rokupang</h3>
-<button onclick="tambah('Rokupang')">+ Tambah</button>
-</div>
+<div class="harga">Rp10.000</div>
+<button onclick="tambah('Rokupang',10000)">+ Tambah</button>
+</div></div></div><div id="notif">✔ Produk sudah masuk ke keranjang</div><script>
 
-</div>
-
-</div>
-
-<div id="notif">✔ Produk sudah masuk ke keranjang</div>
-
-<script>
-
-function tambah(nama){
+function tambah(nama,harga){
 
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
 let index = keranjang.findIndex(p => p.nama === nama);
 
 if(index !== -1){
+
 keranjang[index].jumlah += 1;
+
 }else{
-keranjang.push({nama:nama,jumlah:1});
+
+keranjang.push({
+nama:nama,
+harga:harga,
+jumlah:1
+});
+
 }
 
 localStorage.setItem("keranjang",JSON.stringify(keranjang));
@@ -185,7 +173,7 @@ notif();
 
 function notif(){
 
-let n = document.getElementById("notif");
+let n=document.getElementById("notif");
 
 n.classList.add("show");
 
@@ -195,7 +183,5 @@ n.classList.remove("show");
 
 }
 
-</script>
-
-</body>
+</script></body>
 </html>
