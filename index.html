@@ -78,13 +78,6 @@ button{
     cursor:pointer;
     margin-top:15px;
 }
-footer{
-    background:#17a673;
-    color:white;
-    text-align:center;
-    padding:12px;
-    margin-top:30px;
-}
 /* PEMESANAN PROFESIONAL */
 .pesan-btns{
     display:flex;
@@ -165,15 +158,43 @@ Di Esteler Yummy kami menyajikan Es Teler dengan bahan segar dan rasa yang nikma
 <a href="https://gofood.link/a/AxvvhUd" target="_blank">
 <button class="gofood">Pesan via GoFood</button>
 </a>
-<a href="https://wa.me/6282217743964?text=" target="_blank">
-<button style="background:#17a673;">Pesan via WhatsApp</button>
-</a>
+<button style="background:#17a673;" onclick="pesanWA()">Pesan via WhatsApp</button>
+</div>
+
+<!-- Form Chat WA -->
+<div style="margin-top:15px; max-width:400px; margin-left:auto; margin-right:auto;">
+<label>Nama:</label>
+<input type="text" id="nama" placeholder="Masukkan nama lengkap" style="width:100%; padding:8px; margin-bottom:10px;">
+<label>Pesanan:</label>
+<input type="text" id="pesanan" placeholder="Nama produk & jumlah" style="width:100%; padding:8px; margin-bottom:10px;">
+<label>Alamat:</label>
+<input type="text" id="alamat" placeholder="Alamat lengkap" style="width:100%; padding:8px; margin-bottom:10px;">
+<label>Request:</label>
+<input type="text" id="request" placeholder="Permintaan khusus (opsional)" style="width:100%; padding:8px; margin-bottom:10px;">
 </div>
 </section>
 
 <footer>
 WhatsApp Order : 082217743964
 </footer>
+
+<script>
+function pesanWA(){
+    let nama = document.getElementById("nama").value.trim();
+    let pesanan = document.getElementById("pesanan").value.trim();
+    let alamat = document.getElementById("alamat").value.trim();
+    let request = document.getElementById("request").value.trim();
+
+    if(!nama || !pesanan || !alamat){
+        alert("Nama, Pesanan, dan Alamat wajib diisi!");
+        return;
+    }
+
+    let pesan = `Assalamualaikum%0ANama: ${encodeURIComponent(nama)}%0APesanan: ${encodeURIComponent(pesanan)}%0AAlamat: ${encodeURIComponent(alamat)}%0ARequest: ${encodeURIComponent(request)}%0ATerima kasih`;
+
+    window.open(`https://wa.me/6282217743964?text=${pesan}`, "_blank");
+}
+</script>
 
 </body>
 </html>
