@@ -1,269 +1,162 @@
-<!DOCTYPE html><html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keranjang - Esteler Yummy</title><style>
-
-*{box-sizing:border-box;}
-
-body{
-font-family:Arial, Helvetica, sans-serif;
-margin:0;
-background:#f3fff6;
-}
-
-/* NAVBAR */
-
-nav{
-background:#17a673;
-padding:12px;
-display:flex;
-justify-content:center;
-gap:20px;
-flex-wrap:wrap;
-}
-
-nav a{
-color:white;
-text-decoration:none;
-font-weight:bold;
-}
-
-/* CONTAINER */
-
-.container{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
-
-/* ITEM */
-
-.item{
-background:white;
-padding:15px;
-border-radius:10px;
-margin-bottom:10px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-button{
-border:none;
-padding:6px 10px;
-border-radius:4px;
-cursor:pointer;
-}
-
-.qty button{
-background:#17a673;
-color:white;
-}
-
-.hapus{
-background:red;
-color:white;
-margin-left:6px;
-}
-
-/* TOTAL */
-
-.total{
-font-size:20px;
-font-weight:bold;
-margin-top:15px;
-color:#17a673;
-}
-
-/* PEMBAYARAN */
-
-.pembayaran{
-background:white;
-padding:20px;
-border-radius:10px;
-margin-top:20px;
-box-shadow:0 2px 6px rgba(0,0,0,0.1);
-}
-
-.rek{
-background:#f5f5f5;
-padding:10px;
-border-radius:6px;
-margin-top:10px;
-}
-
-.qris{
-width:220px;
-margin-top:10px;
-border-radius:10px;
-}
-
-/* PESAN */
-
-.pesan{
-background:#17a673;
-color:white;
-border:none;
-padding:15px;
-width:100%;
-margin-top:20px;
-font-size:16px;
-font-weight:bold;
-border-radius:6px;
-cursor:pointer;
-}
-
-</style></head><body><nav>
-<a href="index.html">Home</a>
-<a href="menu.html">Menu</a>
-<a href="keranjang.html">Keranjang</a>
-<a href="lokasi.html">Lokasi</a>
-</nav><div class="container"><h2>Keranjang Pesanan</h2><div id="list"></div><div id="totalBayar" class="total"></div><div class="pembayaran"><h3>Pilih Metode Pembayaran</h3><label>
-<input type="radio" name="bayar" value="Transfer BCA">
-Transfer Bank BCA
-</label><br><br>
-
-<label>
-<input type="radio" name="bayar" value="QRIS">
-QRIS
-</label><p><b>Transfer Bank BCA</b></p><div class="rek">
-A/N Oky Priastomo <br>
-Bank BCA : <b>4920818060</b>
-</div><p style="margin-top:15px;"><b>QRIS</b></p><img src="qris.jpg" class="qris"></div><button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
-
-</div><script>
-
-let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
-
-let list = document.getElementById("list");
-let totalBox = document.getElementById("totalBayar");
-
-function tampil(){
-
-if(keranjang.length===0){
-list.innerHTML="<p>Keranjang kosong</p>";
-totalBox.innerHTML="";
-return;
-}
-
-let html="";
-let total=0;
-
-keranjang.forEach((item,i)=>{
-
-/* ubah harga jadi angka */
-
-let harga=parseInt(item.harga.toString().replace(/\D/g,''))||0;
-
-let subtotal=harga*item.jumlah;
-
-total+=subtotal;
-
-html+=`
-
-<div class="item">
-
-<div>
-<b>${item.nama}</b><br>
-Harga : Rp${harga.toLocaleString()}<br>
-Subtotal : <b>Rp${subtotal.toLocaleString()}</b>
-</div>
-
-<div class="qty">
-
-<button onclick="kurang(${i})">-</button>
-
-<span style="margin:0 10px">${item.jumlah}</span>
-
-<button onclick="tambah(${i})">+</button>
-
-<button class="hapus" onclick="hapus(${i})">Hapus</button>
-
-</div>
-
-</div>
-
-`;
-
-});
-
-list.innerHTML=html;
-
-totalBox.innerHTML="Total yang harus ditransfer : Rp "+total.toLocaleString();
-
-}
-
-function tambah(i){
-keranjang[i].jumlah++;
-simpan();
-}
-
-function kurang(i){
-
-if(keranjang[i].jumlah>1){
-keranjang[i].jumlah--;
-}else{
-keranjang.splice(i,1);
-}
-
-simpan();
-
-}
-
-function hapus(i){
-keranjang.splice(i,1);
-simpan();
-}
-
-function simpan(){
-
-localStorage.setItem("keranjang",JSON.stringify(keranjang));
-tampil();
-
-}
-
-function orderWA(){
-
-if(keranjang.length===0){
-alert("Keranjang kosong");
-return;
-}
-
-let metode=document.querySelector('input[name="bayar"]:checked');
-
-if(!metode){
-alert("Pilih metode pembayaran");
-return;
-}
-
-let pesan="Pesanan Esteler Yummy:%0A%0A";
-
-let total=0;
-
-keranjang.forEach((item,i)=>{
-
-let harga=parseInt(item.harga.toString().replace(/\D/g,''))||0;
-
-let subtotal=harga*item.jumlah;
-
-total+=subtotal;
-
-pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+
-" = Rp"+subtotal+"%0A";
-
-});
-
-pesan+="%0ATotal Transfer : Rp"+total;
-
-pesan+="%0AMetode Bayar : "+metode.value;
-
-window.open("https://wa.me/6282217743964?text="+pesan);
-
-}
-
-tampil();
-
-</script></body>
-</html>
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>Keranjang - Esteler Yummy</title>  <style>  
+  
+body{  
+font-family:Arial;  
+margin:0;  
+background:#f3fff6;  
+}  
+  
+nav{  
+background:#17a673;  
+padding:12px;  
+display:flex;  
+justify-content:center;  
+gap:20px;  
+}  
+  
+nav a{  
+color:white;  
+text-decoration:none;  
+font-weight:bold;  
+}  
+  
+.container{  
+max-width:900px;  
+margin:auto;  
+padding:20px;  
+}  
+  
+.item{  
+background:white;  
+padding:15px;  
+border-radius:8px;  
+margin-bottom:10px;  
+box-shadow:0 2px 6px rgba(0,0,0,0.1);  
+display:flex;  
+justify-content:space-between;  
+align-items:center;  
+}  
+  
+button{  
+border:none;  
+padding:6px 10px;  
+border-radius:5px;  
+cursor:pointer;  
+}  
+  
+.hapus{  
+background:red;  
+color:white;  
+}  
+  
+.pesan{  
+background:#17a673;  
+color:white;  
+padding:12px;  
+margin-top:15px;  
+width:100%;  
+font-weight:bold;  
+}  
+  
+.pembayaran{  
+background:white;  
+padding:15px;  
+border-radius:10px;  
+margin-top:20px;  
+box-shadow:0 2px 6px rgba(0,0,0,0.1);  
+}  
+  
+.qris{  
+width:200px;  
+margin-top:10px;  
+border-radius:10px;  
+}  
+  
+.rek{  
+background:#f5f5f5;  
+padding:10px;  
+border-radius:6px;  
+margin-top:10px;  
+}  
+  
+</style>  </head>  <body>  <nav>  
+<a href="index.html">Home</a>  
+<a href="menu.html">Menu</a>  
+<a href="keranjang.html">Keranjang</a>  
+<a href="lokasi.html">Lokasi</a>  
+</nav>  <div class="container">  <h2>Keranjang Pesanan</h2>  <div id="list"></div>  <!-- PEMBAYARAN -->  <div class="pembayaran">  <h3>Pembayaran</h3>  <p><b>Transfer Bank BCA</b></p>  <div class="rek">  
+A/N Oky Priastomo <br>  
+Bank BCA : <b>4920818060</b>  
+</div>  <p style="margin-top:15px;"><b>Bayar via QRIS</b></p>  <img src="qris.jpg" class="qris">  <p style="font-size:13px;color:gray;">  
+Scan QRIS lalu kirim bukti pembayaran ke WhatsApp  
+</p>  </div>  <button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
+
+</div>  <script>  
+  
+let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];  
+  
+let list=document.getElementById("list");  
+  
+function tampil(){  
+  
+if(keranjang.length==0){  
+list.innerHTML="Keranjang kosong";  
+return;  
+}  
+  
+let html="";  
+  
+keranjang.forEach((item,i)=>{  
+  
+html+=`  
+<div class="item">  
+<span>${item.nama} x ${item.jumlah}</span>  
+<button class="hapus" onclick="hapus(${i})">Hapus</button>  
+</div>  
+`;  
+  
+});  
+  
+list.innerHTML=html;  
+  
+}  
+  
+function hapus(i){  
+  
+keranjang.splice(i,1);  
+  
+localStorage.setItem("keranjang",JSON.stringify(keranjang));  
+  
+tampil();  
+  
+}  
+  
+function orderWA(){  
+  
+if(keranjang.length==0){  
+alert("Keranjang kosong");  
+return;  
+}  
+  
+let pesan="Pesanan Rokupang & Es Teler Yummy:%0A";  
+  
+keranjang.forEach((item,i)=>{  
+  
+pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+"%0A";  
+  
+});  
+  
+pesan+="%0APembayaran: Transfer / QRIS";  
+  
+window.open("https://wa.me/6282217743964?text="+pesan);  
+  
+}  
+  
+tampil();  
+  
+</script>  </body>  
+</html>  
