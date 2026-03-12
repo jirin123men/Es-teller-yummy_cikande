@@ -39,7 +39,7 @@ margin:auto;
 padding:20px;
 }
 
-/* ITEM KERANJANG */
+/* ITEM */
 
 .item{
 background:white;
@@ -51,18 +51,6 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 }
-
-.nama{
-font-weight:bold;
-font-size:16px;
-}
-
-.harga{
-color:#17a673;
-font-size:14px;
-}
-
-/* BUTTON */
 
 button{
 border:none;
@@ -79,7 +67,7 @@ color:white;
 .hapus{
 background:red;
 color:white;
-margin-left:8px;
+margin-left:6px;
 }
 
 /* TOTAL */
@@ -87,7 +75,7 @@ margin-left:8px;
 .total{
 font-size:20px;
 font-weight:bold;
-margin-top:20px;
+margin-top:15px;
 color:#17a673;
 }
 
@@ -134,7 +122,7 @@ cursor:pointer;
 <a href="menu.html">Menu</a>
 <a href="keranjang.html">Keranjang</a>
 <a href="lokasi.html">Lokasi</a>
-</nav><div class="container"><h2>Keranjang Pesanan</h2><div id="list"></div><div class="total" id="totalBayar"></div><div class="pembayaran"><h3>Pilih Metode Pembayaran</h3><label>
+</nav><div class="container"><h2>Keranjang Pesanan</h2><div id="list"></div><div id="totalBayar" class="total"></div><div class="pembayaran"><h3>Pilih Metode Pembayaran</h3><label>
 <input type="radio" name="bayar" value="Transfer BCA">
 Transfer Bank BCA
 </label><br><br>
@@ -145,9 +133,7 @@ QRIS
 </label><p><b>Transfer Bank BCA</b></p><div class="rek">
 A/N Oky Priastomo <br>
 Bank BCA : <b>4920818060</b>
-</div><p style="margin-top:15px;"><b>QRIS</b></p><img src="qris.jpg" class="qris"><p style="font-size:13px;color:gray;">
-Scan QRIS lalu kirim bukti pembayaran ke WhatsApp
-</p></div><button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
+</div><p style="margin-top:15px;"><b>QRIS</b></p><img src="qris.jpg" class="qris"></div><button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
 
 </div><script>
 
@@ -158,7 +144,7 @@ let totalBox = document.getElementById("totalBayar");
 
 function tampil(){
 
-if(keranjang.length==0){
+if(keranjang.length === 0){
 list.innerHTML="<p>Keranjang kosong</p>";
 totalBox.innerHTML="";
 return;
@@ -173,14 +159,13 @@ let subtotal=item.harga*item.jumlah;
 total+=subtotal;
 
 html+=`
+
 <div class="item">
 
 <div>
-<div class="nama">${item.nama}</div>
-<div class="harga">
-Harga: Rp${item.harga.toLocaleString()} <br>
-Subtotal: <b>Rp${subtotal.toLocaleString()}</b>
-</div>
+<b>${item.nama}</b><br>
+Harga : Rp${item.harga.toLocaleString()}<br>
+Subtotal : <b>Rp${subtotal.toLocaleString()}</b>
 </div>
 
 <div class="qty">
@@ -196,6 +181,7 @@ Subtotal: <b>Rp${subtotal.toLocaleString()}</b>
 </div>
 
 </div>
+
 `;
 
 });
@@ -237,7 +223,7 @@ tampil();
 
 function orderWA(){
 
-if(keranjang.length==0){
+if(keranjang.length===0){
 alert("Keranjang kosong");
 return;
 }
@@ -245,7 +231,7 @@ return;
 let metode=document.querySelector('input[name="bayar"]:checked');
 
 if(!metode){
-alert("Pilih metode pembayaran dulu");
+alert("Pilih metode pembayaran");
 return;
 }
 
@@ -258,13 +244,12 @@ keranjang.forEach((item,i)=>{
 let subtotal=item.harga*item.jumlah;
 total+=subtotal;
 
-pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+
-" = Rp"+subtotal+"%0A";
+pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+" = Rp"+subtotal+"%0A";
 
 });
 
-pesan+="%0ATotal Transfer: Rp"+total;
-pesan+="%0AMetode Bayar: "+metode.value;
+pesan+="%0ATotal Transfer : Rp"+total;
+pesan+="%0AMetode Bayar : "+metode.value;
 
 window.open("https://wa.me/6282217743964?text="+pesan);
 
