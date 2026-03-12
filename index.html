@@ -6,7 +6,7 @@
 <title>Esteler Yummy Cikande</title>
 <style>
 body{
-    font-family: Arial;
+    font-family: Arial, sans-serif;
     margin:0;
     background:#f3fff6;
 }
@@ -17,13 +17,14 @@ nav{
     display:flex;
     justify-content:center;
     gap:20px;
+    flex-wrap:wrap;
 }
 nav a{
     color:white;
     text-decoration:none;
     font-weight:bold;
 }
-/* HERO BACKGROUND */
+/* HERO */
 .hero{
     background:url("bg.png") center/cover;
     height:300px;
@@ -84,10 +85,31 @@ footer{
     padding:12px;
     margin-top:30px;
 }
+/* PEMESANAN PROFESIONAL */
+.pesan-btns{
+    display:flex;
+    justify-content:center;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+.pesan-btns button{
+    padding:12px 25px;
+    font-size:16px;
+    font-weight:bold;
+    border-radius:8px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.2);
+    transition:0.2s;
+}
+.pesan-btns button:hover{
+    transform:scale(1.05);
+}
+.shopee{background:#ff5722;}
+.gofood{background:#00c853;}
 </style>
 </head>
-
 <body>
+
 <nav>
 <a href="index.html">Home</a>
 <a href="menu.html">Menu</a>
@@ -103,11 +125,9 @@ footer{
 <section>
 <h2>Apa Itu Es Teler?</h2>
 <p>
-Es Teler adalah minuman khas Indonesia yang terbuat dari campuran
-alpukat, kelapa muda, nangka, susu kental manis, dan es serut.
+Es Teler adalah minuman khas Indonesia yang terbuat dari campuran alpukat, kelapa muda, nangka, susu kental manis, dan es serut.
 Rasanya manis, segar, dan sangat cocok diminum saat cuaca panas.
-Di Esteler Yummy kami menyajikan Es Teler dengan bahan segar dan
-rasa yang nikmat.
+Di Esteler Yummy kami menyajikan Es Teler dengan bahan segar dan rasa yang nikmat.
 </p>
 <a href="menu.html">
 <button>Lihat Menu</button>
@@ -137,14 +157,23 @@ rasa yang nikmat.
 
 <section>
 <h2>Pemesanan</h2>
-<p>Selain WhatsApp, kamu juga bisa pesan langsung lewat Shopee:</p>
+<p>Pesan sekarang lewat platform favoritmu. Cepat, mudah, dan aman!</p>
+<div class="pesan-btns">
 <a href="https://shopee.co.id/universal-link/now-food/shop/21634673?deep_and_deferred=1&shareChannel=copy_link" target="_blank">
-<button>Pesan via Shopee</button>
+<button class="shopee">Pesan via Shopee</button>
 </a>
+<a href="https://gofood.link/a/AxvvhUd" target="_blank">
+<button class="gofood">Pesan via GoFood</button>
+</a>
+<a href="https://wa.me/082217743964" target="_blank">
+<button style="background:#17a673;">Pesan via WhatsApp</button>
+</a>
+</div>
 </section>
 
 <footer>
 WhatsApp Order : 082217743964
 </footer>
+
 </body>
 </html>
