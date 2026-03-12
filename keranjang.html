@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Keranjang - Esteler Yummy</title>
-
-<style>
+<title>Keranjang - Esteler Yummy</title><style>
 
 *{
 box-sizing:border-box;
@@ -42,7 +39,7 @@ margin:auto;
 padding:20px;
 }
 
-/* ITEM */
+/* ITEM KERANJANG */
 
 .item{
 background:white;
@@ -57,46 +54,41 @@ align-items:center;
 
 .nama{
 font-weight:bold;
+font-size:16px;
 }
 
 .harga{
 color:#17a673;
+font-size:14px;
 }
 
-/* QTY */
+/* BUTTON */
+
+button{
+border:none;
+padding:6px 10px;
+border-radius:4px;
+cursor:pointer;
+}
 
 .qty button{
 background:#17a673;
 color:white;
-border:none;
-padding:6px 10px;
-border-radius:4px;
-cursor:pointer;
 }
-
-.qty span{
-margin:0 8px;
-font-weight:bold;
-}
-
-/* HAPUS */
 
 .hapus{
 background:red;
 color:white;
-border:none;
-padding:6px 10px;
-border-radius:4px;
-cursor:pointer;
-margin-left:10px;
+margin-left:8px;
 }
 
 /* TOTAL */
 
 .total{
-font-size:18px;
+font-size:20px;
 font-weight:bold;
-margin-top:10px;
+margin-top:20px;
+color:#17a673;
 }
 
 /* PEMBAYARAN */
@@ -137,69 +129,32 @@ border-radius:6px;
 cursor:pointer;
 }
 
-</style>
-</head>
-
-<body>
-
-<nav>
+</style></head><body><nav>
 <a href="index.html">Home</a>
 <a href="menu.html">Menu</a>
 <a href="keranjang.html">Keranjang</a>
 <a href="lokasi.html">Lokasi</a>
-</nav>
-
-<div class="container">
-
-<h2>Keranjang Pesanan</h2>
-
-<div id="list"></div>
-
-<div class="total" id="total"></div>
-
-<div class="pembayaran">
-
-<h3>Pilih Metode Pembayaran</h3>
-
-<label>
+</nav><div class="container"><h2>Keranjang Pesanan</h2><div id="list"></div><div class="total" id="totalBayar"></div><div class="pembayaran"><h3>Pilih Metode Pembayaran</h3><label>
 <input type="radio" name="bayar" value="Transfer BCA">
 Transfer Bank BCA
-</label>
-
-<br><br>
+</label><br><br>
 
 <label>
 <input type="radio" name="bayar" value="QRIS">
 QRIS
-</label>
-
-<p><b>Transfer Bank BCA</b></p>
-
-<div class="rek">
+</label><p><b>Transfer Bank BCA</b></p><div class="rek">
 A/N Oky Priastomo <br>
 Bank BCA : <b>4920818060</b>
-</div>
-
-<p style="margin-top:15px;"><b>QRIS</b></p>
-
-<img src="qris.jpg" class="qris">
-
-<p style="font-size:13px;color:gray;">
+</div><p style="margin-top:15px;"><b>QRIS</b></p><img src="qris.jpg" class="qris"><p style="font-size:13px;color:gray;">
 Scan QRIS lalu kirim bukti pembayaran ke WhatsApp
-</p>
+</p></div><button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
 
-</div>
-
-<button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
-
-</div>
-
-<script>
+</div><script>
 
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 
 let list = document.getElementById("list");
-let totalBox = document.getElementById("total");
+let totalBox = document.getElementById("totalBayar");
 
 function tampil(){
 
@@ -215,23 +170,24 @@ let total=0;
 keranjang.forEach((item,i)=>{
 
 let subtotal=item.harga*item.jumlah;
-
 total+=subtotal;
 
 html+=`
-
 <div class="item">
 
 <div>
 <div class="nama">${item.nama}</div>
-<div class="harga">Rp${item.harga.toLocaleString()}</div>
+<div class="harga">
+Harga: Rp${item.harga.toLocaleString()} <br>
+Subtotal: <b>Rp${subtotal.toLocaleString()}</b>
+</div>
 </div>
 
 <div class="qty">
 
 <button onclick="kurang(${i})">-</button>
 
-<span>${item.jumlah}</span>
+<span style="margin:0 10px">${item.jumlah}</span>
 
 <button onclick="tambah(${i})">+</button>
 
@@ -240,14 +196,13 @@ html+=`
 </div>
 
 </div>
-
 `;
 
 });
 
 list.innerHTML=html;
 
-totalBox.innerHTML="Total: Rp "+total.toLocaleString();
+totalBox.innerHTML="Total yang harus ditransfer: Rp "+total.toLocaleString();
 
 }
 
@@ -276,7 +231,6 @@ simpan();
 function simpan(){
 
 localStorage.setItem("keranjang",JSON.stringify(keranjang));
-
 tampil();
 
 }
@@ -302,16 +256,15 @@ let total=0;
 keranjang.forEach((item,i)=>{
 
 let subtotal=item.harga*item.jumlah;
-
 total+=subtotal;
 
-pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+" = Rp"+subtotal+"%0A";
+pesan+=(i+1)+". "+item.nama+" x "+item.jumlah+
+" = Rp"+subtotal+"%0A";
 
 });
 
-pesan+="%0ATotal: Rp"+total;
+pesan+="%0ATotal Transfer: Rp"+total;
 pesan+="%0AMetode Bayar: "+metode.value;
-pesan+="%0A%0AKirim bukti pembayaran setelah transfer.";
 
 window.open("https://wa.me/6282217743964?text="+pesan);
 
@@ -319,7 +272,5 @@ window.open("https://wa.me/6282217743964?text="+pesan);
 
 tampil();
 
-</script>
-
-</body>
+</script></body>
 </html>
