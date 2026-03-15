@@ -4,12 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Keranjang - Esteler Yummy</title>
+
 <style>
 body{
     font-family: Arial;
     margin: 0;
     background: #f3fff6;
 }
+
 nav{
     background: #17a673;
     padding: 12px;
@@ -17,16 +19,19 @@ nav{
     justify-content: center;
     gap: 20px;
 }
+
 nav a{
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
+
 .container{
     max-width: 900px;
     margin: auto;
     padding: 20px;
 }
+
 .item{
     background: white;
     padding: 15px;
@@ -37,16 +42,19 @@ nav a{
     justify-content: space-between;
     align-items: center;
 }
+
 button{
     border: none;
     padding: 6px 10px;
     border-radius: 5px;
     cursor: pointer;
 }
+
 .hapus{
     background: red;
     color: white;
 }
+
 .pesan{
     background: #17a673;
     color: white;
@@ -55,6 +63,15 @@ button{
     width: 100%;
     font-weight: bold;
 }
+
+.lokasi{
+    background:#2196f3;
+    color:white;
+    padding:10px;
+    margin-top:8px;
+    border-radius:6px;
+}
+
 .pembayaran{
     background: white;
     padding: 15px;
@@ -62,28 +79,33 @@ button{
     margin-top: 20px;
     box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
+
 .qris{
     width: 200px;
     margin-top: 10px;
     border-radius: 10px;
 }
+
 .rek{
     background: #f5f5f5;
     padding: 10px;
     border-radius: 6px;
     margin-top: 10px;
 }
+
 label{
     display:block;
     margin-top:15px;
     margin-bottom:5px;
 }
+
 input[type="text"]{
     width:100%;
     padding:8px;
     border-radius:6px;
     border:1px solid #ccc;
 }
+
 #error-alamat{
     color:red;
     font-size:13px;
@@ -92,100 +114,172 @@ input[type="text"]{
 }
 </style>
 </head>
+
 <body>
+
 <nav>
-    <a href="index.html">Home</a>
-    <a href="menu.html">Menu</a>
-    <a href="keranjang.html">Keranjang</a>
-    <a href="lokasi.html">Lokasi</a>
+<a href="index.html">Home</a>
+<a href="menu.html">Menu</a>
+<a href="keranjang.html">Keranjang</a>
+<a href="lokasi.html">Lokasi</a>
 </nav>
 
 <div class="container">
-    <h2>Keranjang Pesanan</h2>
-    <div id="list"></div>
 
-    <!-- Alamat Pengiriman -->
-    <label for="alamat">Alamat Pengiriman:</label>
-    <input type="text" id="alamat" placeholder="Masukkan alamat lengkap">
-    <p id="error-alamat">Alamat wajib diisi!</p>
+<h2>Keranjang Pesanan</h2>
 
-    <!-- PEMBAYARAN -->
-    <div class="pembayaran">
-        <h3>Pembayaran</h3>
-        <p><b>Transfer Bank BCA</b></p>
-        <div class="rek">
-            A/N Oky Priastomo <br>
-            Bank BCA : <b>4920818060</b>
-        </div>
-        <p style="margin-top:15px;"><b>Bayar via QRIS</b></p>
-        <img src="qris.jpg" class="qris">
-        <p style="font-size:13px;color:gray;">
-            Scan QRIS lalu kirim bukti pembayaran ke WhatsApp
-        </p>
-    </div>
+<div id="list"></div>
 
-    <button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
+<label>Alamat Pengiriman</label>
+<input type="text" id="alamat" placeholder="Masukkan alamat lengkap atau ambil lokasi">
+
+<button class="lokasi" onclick="ambilLokasi()">📍 Ambil Lokasi Saya</button>
+
+<p id="error-alamat">Alamat wajib diisi!</p>
+
+<div class="pembayaran">
+
+<h3>Pembayaran</h3>
+
+<p><b>Transfer Bank BCA</b></p>
+
+<div class="rek">
+A/N Oky Priastomo <br>
+Bank BCA : <b>4920818060</b>
+</div>
+
+<p style="margin-top:15px;"><b>Bayar via QRIS</b></p>
+
+<img src="qris.jpg" class="qris">
+
+<p style="font-size:13px;color:gray;">
+Scan QRIS lalu kirim bukti pembayaran ke WhatsApp
+</p>
+
+</div>
+
+<button class="pesan" onclick="orderWA()">Pesan via WhatsApp</button>
+
 </div>
 
 <script>
+
 let keranjang = JSON.parse(localStorage.getItem("keranjang")) || [];
 let list = document.getElementById("list");
 let errorAlamat = document.getElementById("error-alamat");
 
 function tampil(){
-    if(keranjang.length == 0){
-        list.innerHTML = "Keranjang kosong";
-        return;
-    }
-    let html = "";
-    keranjang.forEach((item, i) => {
-        html += `
-        <div class="item">
-            <span>${item.nama} x ${item.jumlah} (Rp${item.harga.toLocaleString()} per item)</span>
-            <button class="hapus" onclick="hapus(${i})">Hapus</button>
-        </div>`;
-    });
-    list.innerHTML = html;
+
+if(keranjang.length == 0){
+list.innerHTML = "Keranjang kosong";
+return;
+}
+
+let html = "";
+
+keranjang.forEach((item, i) => {
+
+html += `
+<div class="item">
+<span>${item.nama} x ${item.jumlah} (Rp${item.harga.toLocaleString()})</span>
+<button class="hapus" onclick="hapus(${i})">Hapus</button>
+</div>
+`;
+
+});
+
+list.innerHTML = html;
+
 }
 
 function hapus(i){
-    keranjang.splice(i,1);
-    localStorage.setItem("keranjang", JSON.stringify(keranjang));
-    tampil();
+
+keranjang.splice(i,1);
+
+localStorage.setItem("keranjang", JSON.stringify(keranjang));
+
+tampil();
+
+}
+
+function ambilLokasi(){
+
+if(navigator.geolocation){
+
+navigator.geolocation.getCurrentPosition(function(pos){
+
+let lat = pos.coords.latitude;
+let lon = pos.coords.longitude;
+
+let maps = "https://maps.google.com/?q=" + lat + "," + lon;
+
+document.getElementById("alamat").value = maps;
+
+}, function(){
+
+alert("Lokasi tidak bisa diambil");
+
+});
+
+}else{
+
+alert("Browser tidak mendukung GPS");
+
+}
+
 }
 
 function orderWA(){
-    let alamat = document.getElementById("alamat").value.trim();
-    if(!alamat){
-        errorAlamat.style.display = "block"; // tampilkan error inline
-        return;
-    } else {
-        errorAlamat.style.display = "none"; // sembunyikan error kalau sudah diisi
-    }
 
-    if(keranjang.length == 0){
-        alert("Keranjang kosong");
-        return;
-    }
+let alamat = document.getElementById("alamat").value.trim();
 
-    let pesan = "Pesanan Rokupang & Es Teler Yummy:\n";
-    let total = 0;
+if(!alamat){
 
-    keranjang.forEach((item,i)=>{
-        let subtotal = item.harga * item.jumlah;
-        total += subtotal;
-        pesan += `${i+1}. ${item.nama} x ${item.jumlah} = Rp${subtotal.toLocaleString()}\n`;
-    });
+errorAlamat.style.display="block";
+return;
 
-    pesan += `\nTotal: Rp${total.toLocaleString()}\n`;
-    pesan += `Alamat Pengiriman: ${alamat}\n`;
-    pesan += `Pembayaran: Transfer / QRIS`;
+}else{
 
-    let waLink = "https://wa.me/6282217743964?text=" + encodeURIComponent(pesan);
-    window.open(waLink);
+errorAlamat.style.display="none";
+
+}
+
+if(keranjang.length == 0){
+
+alert("Keranjang kosong");
+return;
+
+}
+
+let pesan = "Pesanan Rokupang & Es Teler Yummy:\n\n";
+
+let total = 0;
+
+keranjang.forEach((item,i)=>{
+
+let subtotal = item.harga * item.jumlah;
+
+total += subtotal;
+
+pesan += `${i+1}. ${item.nama} x ${item.jumlah} = Rp${subtotal.toLocaleString()}\n`;
+
+});
+
+pesan += `\nTotal: Rp${total.toLocaleString()}\n`;
+
+pesan += `Alamat Pengiriman:\n${alamat}\n`;
+
+pesan += `\nPembayaran: Transfer / QRIS`;
+
+let wa = "https://wa.me/6282217743964?text=" + encodeURIComponent(pesan);
+
+window.open(wa);
+
 }
 
 tampil();
+
 </script>
+
 </body>
 </html>
